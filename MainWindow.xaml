@@ -1,0 +1,25 @@
+﻿<Window x:Class="BrightnessControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BrightnessControl"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="Auto" Width="256" Closed="Window_Closed" WindowStyle="None" AllowsTransparency="True" Background="Black" Deactivated="Window_Deactivated" SizeToContent="Height" Loaded="Window_Loaded" Left="50" Top="60" Focusable="False" Topmost="True" ShowInTaskbar="False">
+    <Grid>
+        <StackPanel Margin="15,5,15,15">
+            <Label x:Name="label" Content="Brightness" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Padding="0,5" FontSize="12" />
+            <Slider x:Name="brightnessSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="100" ValueChanged="brightnessSlider_ValueChanged" Style="{DynamicResource FlatSlider}" Width="226" />
+            <Label x:Name="label1" Content="Contrast" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Padding="0,5" Margin="0,5,0,0" FontSize="12" />
+            <Slider x:Name="contrastSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="100" ValueChanged="contrastSlider_ValueChanged" Style="{DynamicResource FlatSlider}" Width="226" />
+        </StackPanel>
+    </Grid>
+    <Window.Resources>
+        <Storyboard x:Key="hide">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="0.0"/>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Hidden}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+</Window>
