@@ -37,10 +37,23 @@ namespace BrightnessControl
             notifyIcon.Visible = true;
             notifyIcon.MouseClick += notifyIcon_MouseClick;
             notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu();
+            notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("Settings", (sender, e) => SettingsWindow.ShowInstance()));
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("Quit", (sender, e) => Close()));
-
             brightnessSlider.Value = DisplayConfiguration.GetMonitorBrightness(physicalMonitors[0]) * 100;
             contrastSlider.Value = DisplayConfiguration.GetMonitorContrast(physicalMonitors[0]) * 100;
+        }
+
+        public void RegisterHotkeys()
+        {
+            hotkeys = new HotkeyManager(this);
+            hotkeys.Register(0, (ModifierKeys)Properties.Settings.Default.VolumeDownModifiers, (Key)Properties.Settings.Default.VolumeDownKey);
+            hotkeys.Register(1, (ModifierKeys)Properties.Settings.Default.VolumeUpModifiers, (Key)Properties.Settings.Default.VolumeUpKey);
+            hotkeys.Pressed += hotkeys_Pressed;
+        }
+
+        public void UnregisterHotkeys()
+        {
+            hotkeys.Dispose();
         }
 
         private void ScheduleHiding()
@@ -155,15 +168,13 @@ namespace BrightnessControl
         {
             Visibility = Visibility.Hidden;
 
-            hotkeys = new HotkeyManager(this);
-            hotkeys.Register(0, ModifierKeys.Alt, Key.Subtract);
-            hotkeys.Register(1, ModifierKeys.Alt, Key.Add);
-            hotkeys.Pressed += hotkeys_Pressed;
+            RegisterHotkeys();
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            hotkeys.Dispose();
+            UnregisterHotkeys();
+
             DisplayConfiguration.DestroyPhysicalMonitors(physicalMonitors);
         }
     }

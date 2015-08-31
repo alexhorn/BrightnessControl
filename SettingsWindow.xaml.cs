@@ -1,0 +1,126 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using MahApps.Metro.Controls;
+
+namespace BrightnessControl
+{
+    /// <summary>
+    /// Interaktionslogik für SettingsWindow.xaml
+    /// </summary>
+    public partial class SettingsWindow
+    {
+        private static SettingsWindow instance;
+
+        public static SettingsWindow ShowInstance()
+        {
+            if (instance != null)
+            {
+                instance.Focus();
+            }
+            else
+            {
+                instance = new SettingsWindow();
+                instance.Closed += (sender, e) => instance = null;
+                instance.Show();
+            }
+            return instance;
+        }
+
+        private ModifierKeys volumeUpModifiers, volumeDownModifiers;
+        private Key volumeUpKey, volumeDownKey;
+
+        public SettingsWindow()
+        {
+            InitializeComponent();
+
+            volumeUpModifiers = (ModifierKeys)Properties.Settings.Default.VolumeUpModifiers;
+            volumeDownModifiers = (ModifierKeys)Properties.Settings.Default.VolumeDownModifiers;
+            volumeUpKey = (Key)Properties.Settings.Default.VolumeUpKey;
+            volumeDownKey = (Key)Properties.Settings.Default.VolumeDownKey;
+            RefreshHotkeyTextBoxes();
+        }
+
+        private bool IsModifier(Key key)
+        {
+            return key == Key.LeftAlt
+                || key == Key.RightAlt
+                || key == Key.LeftCtrl
+                || key == Key.RightCtrl
+                || key == Key.LeftShift
+                || key == Key.RightShift
+                || key == Key.LWin
+                || key == Key.RWin;
+        }
+
+        private void RefreshHotkeyTextBoxes()
+        {
+            volumeUpTextBox.Text = volumeUpModifiers.ToString() + " + " + volumeUpKey.ToString();
+            volumeDownTextBox.Text = volumeDownModifiers.ToString() + " + " + volumeDownKey.ToString();
+        }
+
+        private void volumeUpTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void volumeUpTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+            if (!IsModifier(key))
+            {
+                volumeUpModifiers = Keyboard.Modifiers;
+                volumeUpKey = key;
+                RefreshHotkeyTextBoxes();
+            }
+            e.Handled = true;
+        }
+
+        private void volumeDownTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void volumeDownTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+            if (!IsModifier(key))
+            {
+                volumeDownModifiers = Keyboard.Modifiers;
+                volumeDownKey = key;
+                RefreshHotkeyTextBoxes();
+            }
+            e.Handled = true;
+        }
+
+        private void saveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.VolumeUpModifiers = (int)volumeUpModifiers;
+            Properties.Settings.Default.VolumeUpKey = (int)volumeUpKey;
+            Properties.Settings.Default.VolumeDownModifiers = (int)volumeDownModifiers;
+            Properties.Settings.Default.VolumeDownKey = (int)volumeDownKey;
+            Properties.Settings.Default.Save();
+
+            ((MainWindow)Application.Current.MainWindow).UnregisterHotkeys();
+            ((MainWindow)Application.Current.MainWindow).RegisterHotkeys();
+
+            Close();
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+    }
+}
