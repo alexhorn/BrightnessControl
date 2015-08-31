@@ -5,15 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BrightnessControl"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="400" ResizeMode="NoResize">
+        Title="Settings" Height="400" Width="400" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="label" Content="Hotkeys" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" />
         <Label x:Name="label1" Content="Volume Up" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="15" />
         <TextBox x:Name="volumeUpTextBox" Height="23" Margin="10,82,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" KeyUp="volumeUpTextBox_KeyUp" KeyDown="volumeUpTextBox_KeyDown" />
         <Label x:Name="label2" Content="Volume Down" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontSize="15" />
         <TextBox x:Name="volumeDownTextBox" Height="23" Margin="10,140,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" KeyUp="volumeDownTextBox_KeyUp" KeyDown="volumeDownTextBox_KeyDown" />
+        <Label x:Name="label3" Content="Autostart" HorizontalAlignment="Left" Margin="10,168,0,0" VerticalAlignment="Top" FontSize="20" />
+        <CheckBox x:Name="autostartCheckBox" Content="Start BrightnessControl on boot" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" FontSize="15" Padding="4,-3,0,0" />
         <Button x:Name="saveButton" Content="Save" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,90,10" Click="saveButton_Click"/>
         <Button x:Name="cancelButton" Content="Cancel" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="0,0,10,10" Click="cancelButton_Click"/>
-
     </Grid>
 </Window>

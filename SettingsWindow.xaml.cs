@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
+using System.Reflection;
 
 namespace BrightnessControl
 {
@@ -39,6 +40,7 @@ namespace BrightnessControl
 
         private ModifierKeys volumeUpModifiers, volumeDownModifiers;
         private Key volumeUpKey, volumeDownKey;
+        private AutostartManager autostartManager;
 
         public SettingsWindow()
         {
@@ -49,6 +51,9 @@ namespace BrightnessControl
             volumeUpKey = (Key)Properties.Settings.Default.VolumeUpKey;
             volumeDownKey = (Key)Properties.Settings.Default.VolumeDownKey;
             RefreshHotkeyTextBoxes();
+
+            autostartManager = new AutostartManager("BrightnessControl", Assembly.GetExecutingAssembly().Location, "/autostart", AutostartType.CurrentUser);
+            autostartCheckBox.IsChecked = autostartManager.IsRegistered;
         }
 
         private bool IsModifier(Key key)
@@ -110,6 +115,15 @@ namespace BrightnessControl
             Properties.Settings.Default.VolumeDownModifiers = (int)volumeDownModifiers;
             Properties.Settings.Default.VolumeDownKey = (int)volumeDownKey;
             Properties.Settings.Default.Save();
+
+            if (autostartCheckBox.IsChecked == true && !autostartManager.IsRegistered)
+            {
+                autostartManager.Register();
+            }
+            else if (autostartCheckBox.IsChecked == false && autostartManager.IsRegistered)
+            {
+                autostartManager.Unregister();
+            }
 
             ((MainWindow)Application.Current.MainWindow).UnregisterHotkeys();
             ((MainWindow)Application.Current.MainWindow).RegisterHotkeys();
