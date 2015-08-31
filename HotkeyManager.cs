@@ -58,7 +58,7 @@ namespace BrightnessControl
                 int error = Marshal.GetLastWin32Error();
                 if (error == ERROR_HOTKEY_ALREADY_REGISTERED)
                 {
-                    throw new HotkeyAlreadyRegisteredException();
+                    throw new HotkeyAlreadyRegisteredException(modifiers, key);
                 }
                 else
                 {
@@ -94,9 +94,13 @@ namespace BrightnessControl
 
     class HotkeyAlreadyRegisteredException : Exception
     {
-        public HotkeyAlreadyRegisteredException()
-        {
+        public ModifierKeys Modifiers { get; private set; }
+        public Key Key { get; private set; }
 
+        public HotkeyAlreadyRegisteredException(ModifierKeys modifiers, Key key)
+        {
+            Modifiers = modifiers;
+            Key = key;
         }
     }
 }

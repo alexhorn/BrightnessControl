@@ -46,9 +46,16 @@ namespace BrightnessControl
         public void RegisterHotkeys()
         {
             hotkeys = new HotkeyManager(this);
-            hotkeys.Register(0, (ModifierKeys)Properties.Settings.Default.VolumeDownModifiers, (Key)Properties.Settings.Default.VolumeDownKey);
-            hotkeys.Register(1, (ModifierKeys)Properties.Settings.Default.VolumeUpModifiers, (Key)Properties.Settings.Default.VolumeUpKey);
-            hotkeys.Pressed += hotkeys_Pressed;
+            try
+            {
+                hotkeys.Register(0, (ModifierKeys)Properties.Settings.Default.VolumeDownModifiers, (Key)Properties.Settings.Default.VolumeDownKey);
+                hotkeys.Register(1, (ModifierKeys)Properties.Settings.Default.VolumeUpModifiers, (Key)Properties.Settings.Default.VolumeUpKey);
+                hotkeys.Pressed += hotkeys_Pressed;
+            }
+            catch (HotkeyAlreadyRegisteredException e)
+            {
+                MessageBox.Show(string.Format("Failed to register {0} + {1} as a Hotkey.\nPlease try selecting something different in the settings.", e.Modifiers, e.Key), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         public void UnregisterHotkeys()
