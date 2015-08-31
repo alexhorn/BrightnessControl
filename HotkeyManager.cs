@@ -41,9 +41,7 @@ namespace BrightnessControl
                 EventHandler<PressedEventArgs> handler = Pressed;
                 if (handler != null)
                 {
-                    handler(this, new PressedEventArgs() {
-                        Id = (int)wParam
-                    });
+                    handler(this, new PressedEventArgs((int)wParam));
                 }
 
                 handled = true;
@@ -89,7 +87,12 @@ namespace BrightnessControl
 
     class PressedEventArgs : EventArgs
     {
-        public int Id;
+        public int Id { get; private set; }
+
+        public PressedEventArgs(int id)
+        {
+            Id = id;
+        }
     }
 
     class HotkeyAlreadyRegisteredException : Exception
