@@ -15,11 +15,21 @@
         </StackPanel>
     </Grid>
     <Window.Resources>
-        <Storyboard x:Key="hide">
-            <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="0.0"/>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
-                <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Hidden}"/>
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
+        <ResourceDictionary>
+            <Storyboard x:Key="hide">
+                <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:1" To="0.0"/>
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                    <DiscreteObjectKeyFrame KeyTime="0:0:1" Value="{x:Static Visibility.Hidden}"/>
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cyan.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/FlatSlider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 </Window>
