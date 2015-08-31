@@ -35,7 +35,7 @@ namespace BrightnessControl
                 notifyIcon.Icon = new System.Drawing.Icon(stream);
             }
             notifyIcon.Visible = true;
-            notifyIcon.Click += notifyIcon_Click;
+            notifyIcon.MouseClick += notifyIcon_MouseClick;
             notifyIcon.ContextMenu = new System.Windows.Forms.ContextMenu();
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("Quit", (sender, e) => Close()));
 
@@ -137,10 +137,13 @@ namespace BrightnessControl
             }
         }
 
-        private void notifyIcon_Click(object sender, EventArgs e)
+        private void notifyIcon_MouseClick(object sender, System.Windows.Forms.MouseEventArgs e)
         {
-            Visibility = Visibility.Visible;
-            ScheduleHiding();
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            {
+                Visibility = Visibility.Visible;
+                ScheduleHiding();
+            }
         }
 
         private void Window_Deactivated(object sender, EventArgs e)
