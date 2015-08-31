@@ -3,7 +3,7 @@ BrightnessControl allows you to change your monitor's brightness settings via ke
 
 ![Screenshot](http://i.imgur.com/YkR3bCo.png)
 
-Auto-start functionality is not included yet. To use BrightnessControl, configure Windows to start it at boot and then use Alt+Plus or Alt+Minus to change brightness and contrast. Alternatively, you can open the brightness / contrast overlay by clicking on the system tray icon. You can change the predefined hotkeys in the settings accessible via the system tray icon context menu.
+You can configure autostart and hotkeys using the settings accessibly via the system tray icon context menu. By default, you can use Alt + Add and Alt + Subtract to change your monitor's brightness settings. Alternatively, you can click on the system tray icon to open the brightness / contrast overlay.
 
 ## System requirements
 * Windows Vista or newer
