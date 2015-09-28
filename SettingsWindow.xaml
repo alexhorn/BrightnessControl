@@ -8,9 +8,9 @@
         Title="Settings" Height="400" Width="400" ResizeMode="NoResize">
     <Grid>
         <Label x:Name="label" Content="Hotkeys" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20" />
-        <Label x:Name="label1" Content="Volume Up" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="15" />
+        <Label x:Name="label1" Content="Brightness Up" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top" FontSize="15" />
         <TextBox x:Name="volumeUpTextBox" Height="23" Margin="10,82,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" KeyUp="volumeUpTextBox_KeyUp" KeyDown="volumeUpTextBox_KeyDown" />
-        <Label x:Name="label2" Content="Volume Down" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontSize="15" />
+        <Label x:Name="label2" Content="Brightness Down" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" FontSize="15" />
         <TextBox x:Name="volumeDownTextBox" Height="23" Margin="10,140,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="15" KeyUp="volumeDownTextBox_KeyUp" KeyDown="volumeDownTextBox_KeyDown" />
         <Label x:Name="label3" Content="Autostart" HorizontalAlignment="Left" Margin="10,168,0,0" VerticalAlignment="Top" FontSize="20" />
         <CheckBox x:Name="autostartCheckBox" Content="Start BrightnessControl on boot" HorizontalAlignment="Left" Margin="10,210,0,0" VerticalAlignment="Top" FontSize="15" Padding="4,-3,0,0" />
