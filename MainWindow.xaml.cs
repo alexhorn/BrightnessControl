@@ -16,7 +16,7 @@ namespace BrightnessControl
         static TimeSpan HIDING_DELAY = TimeSpan.FromSeconds(5);
         static TimeSpan CHANGE_DELAY = TimeSpan.FromMilliseconds(250);
 
-        DispatcherTimeout brightnessTimeout, contrastTimeout, hideTimeout;
+        DispatcherTimeout brightnessTimeout, hideTimeout;
         DisplayConfiguration.PHYSICAL_MONITOR[] physicalMonitors;
         HotkeyManager hotkeys;
         Storyboard hideStoryboard;
@@ -28,7 +28,7 @@ namespace BrightnessControl
             physicalMonitors = DisplayConfiguration.GetPhysicalMonitors(DisplayConfiguration.GetCurrentMonitor());
             hideStoryboard = (Storyboard)FindResource("hide");
             notifyIcon = new System.Windows.Forms.NotifyIcon();
-            notifyIcon.Text = "Brightness and Contrast";
+            notifyIcon.Text = "Brightness";
             using (Stream stream = Application.GetResourceStream(new Uri("brightness.ico", UriKind.Relative)).Stream)
             {
                 notifyIcon.Icon = new System.Drawing.Icon(stream);
@@ -39,7 +39,6 @@ namespace BrightnessControl
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("Settings", (sender, e) => SettingsWindow.ShowInstance()));
             notifyIcon.ContextMenu.MenuItems.Add(new System.Windows.Forms.MenuItem("Quit", (sender, e) => Close()));
             brightnessSlider.Value = DisplayConfiguration.GetMonitorBrightness(physicalMonitors[0]) * 100;
-            contrastSlider.Value = DisplayConfiguration.GetMonitorContrast(physicalMonitors[0]) * 100;
         }
 
         public void RegisterHotkeys()
@@ -89,23 +88,6 @@ namespace BrightnessControl
             }
         }
 
-        private void RefreshContrast()
-        {
-            foreach (DisplayConfiguration.PHYSICAL_MONITOR physicalMonitor in physicalMonitors)
-            {
-                try
-                {
-                    DisplayConfiguration.SetMonitorContrast(physicalMonitor, contrastSlider.Value / contrastSlider.Maximum);
-                }
-                catch (Win32Exception e)
-                {
-                    // The monitor configuration API tends to throw errors randomly, so we log and ignore them
-                    Debug.WriteLine(string.Format("Windows API threw an error when changing contrast (0x{0:X}): {1}", e.NativeErrorCode, e.Message));
-                    brightnessTimeout = new DispatcherTimeout(RefreshBrightness, CHANGE_DELAY);
-                }
-            }
-        }
-
         private void brightnessSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (brightnessTimeout != null)
@@ -113,16 +95,6 @@ namespace BrightnessControl
                 brightnessTimeout.Cancel();
             }
             brightnessTimeout = new DispatcherTimeout(RefreshBrightness, CHANGE_DELAY);
-            ScheduleHiding();
-        }
-
-        private void contrastSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            if (contrastTimeout != null)
-            {
-                contrastTimeout.Cancel();
-            }
-            contrastTimeout = new DispatcherTimeout(RefreshContrast, CHANGE_DELAY);
             ScheduleHiding();
         }
 

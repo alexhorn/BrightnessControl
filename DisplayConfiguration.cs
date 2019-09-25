@@ -11,7 +11,6 @@ namespace BrightnessControl
         private const int PHYSICAL_MONITOR_DESCRIPTION_SIZE = 128;
 
         private const int MC_CAPS_BRIGHTNESS = 0x2;
-        private const int MC_CAPS_CONTRAST = 0x4;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct PHYSICAL_MONITOR
@@ -51,12 +50,6 @@ namespace BrightnessControl
 
         [DllImport("dxva2.dll", SetLastError = true)]
         private extern static bool SetMonitorBrightness(IntPtr hMonitor, uint dwNewBrightness);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private extern static bool GetMonitorContrast(IntPtr hMonitor, out uint pdwMinimumContrast, out uint pdwCurrentContrast, out uint pdwMaximumContrast);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private extern static bool SetMonitorContrast(IntPtr hMonitor, uint dwNewContrast);
 
         public static IntPtr GetCurrentMonitor()
         {
@@ -106,11 +99,6 @@ namespace BrightnessControl
             return (GetMonitorCapabilities(physicalMonitor) & MC_CAPS_BRIGHTNESS) != 0;
         }
 
-        public static bool GetContrastSupport(PHYSICAL_MONITOR physicalMonitor)
-        {
-            return (GetMonitorCapabilities(physicalMonitor) & MC_CAPS_CONTRAST) != 0;
-        }
-
         public static double GetMonitorBrightness(PHYSICAL_MONITOR physicalMonitor)
         {
             uint dwMinimumBrightness, dwCurrentBrightness, dwMaximumBrightness;
@@ -134,27 +122,5 @@ namespace BrightnessControl
             }
         }
 
-        public static double GetMonitorContrast(PHYSICAL_MONITOR physicalMonitor)
-        {
-            uint dwMinimumContrast, dwCurrentContrast, dwMaximumContrast;
-            if (!GetMonitorContrast(physicalMonitor.hPhysicalMonitor, out dwMinimumContrast, out dwCurrentContrast, out dwMaximumContrast))
-            {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
-            return (double)(dwCurrentContrast - dwMinimumContrast) / (double)(dwMaximumContrast - dwMinimumContrast);
-        }
-
-        public static void SetMonitorContrast(PHYSICAL_MONITOR physicalMonitor, double contrast)
-        {
-            uint dwMinimumContrast, dwCurrentContrast, dwMaximumContrast;
-            if (!GetMonitorContrast(physicalMonitor.hPhysicalMonitor, out dwMinimumContrast, out dwCurrentContrast, out dwMaximumContrast))
-            {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
-            if (!SetMonitorContrast(physicalMonitor.hPhysicalMonitor, (uint)(dwMinimumContrast + (dwMaximumContrast - dwMinimumContrast) * contrast)))
-            {
-                throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
-        }
     }
 }

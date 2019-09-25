@@ -5,13 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BrightnessControl"
         mc:Ignorable="d"
-        Title="MainWindow" Height="Auto" Width="256" Closed="Window_Closed" WindowStyle="None" AllowsTransparency="True" Background="Black" Deactivated="Window_Deactivated" SizeToContent="Height" Loaded="Window_Loaded" Left="50" Top="60" Focusable="False" Topmost="True" ShowInTaskbar="False" ShowActivated="False">
+        Title="MainWindow" Height="Auto" Width="128" Closed="Window_Closed" WindowStyle="None" AllowsTransparency="True" Background="Black" Deactivated="Window_Deactivated" SizeToContent="Height" Loaded="Window_Loaded" Left="50" Top="60" Focusable="False" Topmost="True" ShowInTaskbar="False" ShowActivated="False">
     <Grid>
         <StackPanel Margin="15,5,15,15">
             <Label x:Name="label" Content="Brightness" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Padding="0,5" FontSize="12" />
-            <Slider x:Name="brightnessSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="100" ValueChanged="brightnessSlider_ValueChanged" Style="{DynamicResource FlatSlider}" Width="226" />
-            <Label x:Name="label1" Content="Contrast" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Padding="0,5" Margin="0,5,0,0" FontSize="12" />
-            <Slider x:Name="contrastSlider" HorizontalAlignment="Left" VerticalAlignment="Top" Maximum="100" ValueChanged="contrastSlider_ValueChanged" Style="{DynamicResource FlatSlider}" Width="226" />
+            <Slider x:Name="brightnessSlider" VerticalAlignment="Top" Maximum="100" ValueChanged="brightnessSlider_ValueChanged" Style="{DynamicResource FlatSlider}" />
         </StackPanel>
     </Grid>
     <Window.Resources>

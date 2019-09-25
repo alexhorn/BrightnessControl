@@ -1,9 +1,9 @@
 # BrightnessControl
 BrightnessControl allows you to change your monitor's brightness settings via keyboard hotkeys.
 
-![Screenshot](http://i.imgur.com/YkR3bCo.png)
+![Screenshot](https://i.imgur.com/YcP72dk.png)
 
-You can configure autostart and hotkeys using the settings accessibly via the system tray icon context menu. By default, you can use Alt + Add and Alt + Subtract to change your monitor's brightness settings. Alternatively, you can click on the system tray icon to open the brightness / contrast overlay.
+You can configure autostart and hotkeys using the settings accessibly via the system tray icon context menu. By default, you can use Alt + Add and Alt + Subtract to change your monitor's brightness settings. Alternatively, you can click on the system tray icon to open the brightness overlay.
 
 ## System requirements
 * Windows Vista or newer
