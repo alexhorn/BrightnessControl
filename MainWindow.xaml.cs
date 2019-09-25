@@ -13,7 +13,6 @@ namespace BrightnessControl
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int ERROR_GEN_FAILURE = 0x1F;
         static TimeSpan HIDING_DELAY = TimeSpan.FromSeconds(5);
         static TimeSpan CHANGE_DELAY = TimeSpan.FromMilliseconds(250);
 
@@ -81,19 +80,11 @@ namespace BrightnessControl
                 {
                     DisplayConfiguration.SetMonitorBrightness(physicalMonitor, brightnessSlider.Value / brightnessSlider.Maximum);
                 }
-                catch (Win32Exception e_)
+                catch (Win32Exception e)
                 {
-                    // LG Flatron W2443T sometimes causes ERROR_GEN_FAILURE when rapidly changing brightness or contrast
-                    if (e_.NativeErrorCode == ERROR_GEN_FAILURE)
-                    {
-                        Debug.WriteLine("ERROR_GEN_FAILURE while setting brightness, rescheduling");
-                        brightnessTimeout = new DispatcherTimeout(RefreshBrightness, CHANGE_DELAY);
-                        break;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    // The monitor configuration API tends to throw errors randomly, so we log and ignore them
+                    Debug.WriteLine(string.Format("Windows API threw an error when changing brightness (0x{0:X}): {1}", e.NativeErrorCode, e.Message));
+                    brightnessTimeout = new DispatcherTimeout(RefreshBrightness, CHANGE_DELAY);
                 }
             }
         }
@@ -106,19 +97,11 @@ namespace BrightnessControl
                 {
                     DisplayConfiguration.SetMonitorContrast(physicalMonitor, contrastSlider.Value / contrastSlider.Maximum);
                 }
-                catch (Win32Exception e_)
+                catch (Win32Exception e)
                 {
-                    // LG Flatron W2443T sometimes causes ERROR_GEN_FAILURE when rapidly changing brightness or contrast
-                    if (e_.NativeErrorCode == ERROR_GEN_FAILURE)
-                    {
-                        Debug.WriteLine("ERROR_GEN_FAILURE while setting contrast, rescheduling");
-                        contrastTimeout = new DispatcherTimeout(RefreshContrast, CHANGE_DELAY);
-                        break;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    // The monitor configuration API tends to throw errors randomly, so we log and ignore them
+                    Debug.WriteLine(string.Format("Windows API threw an error when changing contrast (0x{0:X}): {1}", e.NativeErrorCode, e.Message));
+                    brightnessTimeout = new DispatcherTimeout(RefreshBrightness, CHANGE_DELAY);
                 }
             }
         }
