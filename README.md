@@ -1,3 +1,5 @@
+**⚠ Deprecation Notice:** This still works, but I've stopped developing it a while ago. Try [Twinkle Tray](https://github.com/xanderfrangos/twinkle-tray) or [Monitorian](https://github.com/emoacht/Monitorian) instead.
+
 # BrightnessControl
 BrightnessControl allows you to change your monitor's brightness settings via keyboard hotkeys.
 
